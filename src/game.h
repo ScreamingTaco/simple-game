@@ -25,6 +25,7 @@ class game {
 	public:
 		void play(); //this should be the only public function
 	private: // everything not in fighters.h goes here
+        void show_banner() const;
         void show_story() const;
         FIGHTER_TYPE calc_Type(char input);
 		void battle(player &battle_player, enemy &battle_enemy);
@@ -32,7 +33,6 @@ class game {
         void show_credits() const;
         void game_loop(player player1, enemy temporary_enemy, enemy boss, char path_choice = 'h');
         void new_game();
-        void save_game(player player_to_save)
         void load_game();
 };
 

@@ -173,9 +173,10 @@ void player::upgrade(){
                     xp = xp - upgrade_amount;
                     break;
                 }
-                else
+                else{
                     cout << "I dont understand what you mean" << endl;
                     break;
+                }
             case 'd':
                 cout << "How many xp points would you like to use to upgrade defense? " << endl;
                 cin >> upgrade_amount;
@@ -188,9 +189,10 @@ void player::upgrade(){
                     xp = xp - upgrade_amount;
                     break;
                 }
-                else
+                else{
                     cout << "I dont understand what you mean" << endl;
                     break;
+                }
             case 's':
                 cout << "How many xp points would you like to use to upgrade speed? " << endl;
                 cin >> upgrade_amount;
@@ -203,9 +205,10 @@ void player::upgrade(){
                     xp = xp - upgrade_amount;
                     break;
                 }
-                else
+                else{
                     cout << "I dont understand what you mean" << endl;
                     break;
+                }
             case 'm':
                 cout << "How many xp points would you like to use to upgrade your max health? " << endl;
                 cin >> upgrade_amount;
@@ -218,9 +221,10 @@ void player::upgrade(){
                     xp = xp - upgrade_amount;
                     break;
                 }
-                else
+                else{
                     cout << "I dont understand what you mean" << endl;
                     break;
+                }
             case 'h':
                 if (current_hp == max_hp){
                     cout << "You do not need to be healed!" << endl;
@@ -238,9 +242,10 @@ void player::upgrade(){
                     cout << "Ok. Goodbye!" << endl;
                     break;
                 }
-                else
+                else{
                     cout << "I dont understand what you mean" << endl;
                     break;
+                }
             case 'q':
                 cout << "Have a nice day!" << endl;
                 return;
