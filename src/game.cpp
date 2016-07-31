@@ -223,19 +223,21 @@ void game::show_credits() const{
 }
 
 void game::new_game(){
+    //for some reason, a first input is asumed, so im adding this to bypass it
+    string nothing = " ";
+    std::getline(cin, nothing);
     show_story();
     std::this_thread::sleep_for(std::chrono::milliseconds(3000));
     string player_name = " ";
     char player_type_selection;
-    //char path_choice; // battle random enemy, fight boss, upgrade, etc
     FIGHTER_TYPE player_Type;
-    //cout << "Welcome to the Adventures of Linus!" << endl
     cout << "Please enter your character's name (leave blank for default): " << endl;
-    std::getline (cin, player_name, '\n'); //adding # somehow fixed a bug that wouldnt allow the user to enter their names
+    std::getline (cin, player_name); 
     //cin >> player_name;
     cout << "Please enter your character's type (m for mage, a for archer, or w for warrior( blank will make you warrior): " << endl;
     std::cin.get (player_type_selection);
     player main_player (calc_Type(player_type_selection), player_name.empty() ? "Linus" : player_name);
+    //player main_player (calc_Type(player_type_selection));
     cout << "Your starting stats are:" << endl << endl;
     main_player.show_all_stats();
     cout << endl << endl;

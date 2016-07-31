@@ -301,16 +301,7 @@ void player::load(){
     std::string string_speed;
     std::string string_xp;
     if (savefile.is_open()){
-    /*std::getline(savefile, this->name, '\n');
-    std::getline(savefile, this->type, '\n');
-    std::getline(savefile, this->weakness, '\n');
-    std::getline(savefile, this->max_hp, '\n');
-    std::getline(savefile, this->current_hp, '\n');
-    std::getline(savefile, this->attack, '\n');
-    std::getline(savefile, this->defense, '\n');
-    std::getline(savefile, this->speed, '\n');
-    std::getline(savefile, this->xp, '\n');
-    return;*/
+    //cout << "Opening file" << endl; //debug
     std::getline(savefile, this->name, '\n');
     std::getline(savefile, string_playertype, '\n');
     std::getline(savefile, string_weakness, '\n');
@@ -320,8 +311,11 @@ void player::load(){
     std::getline(savefile, string_defense, '\n');
     std::getline(savefile, string_speed, '\n');
     std::getline(savefile, string_xp, '\n');
+   // cout << "Reading type" << endl;//debug
     type = static_cast<FIGHTER_TYPE>(std::stoi(string_playertype));
+    //cout << "Reading weakness" << endl;//debug
     weakness = static_cast<FIGHTER_TYPE>(std::stoi(string_weakness));
+    //cout << "Reading max_hp)" << endl;//debug
     max_hp = std::stoi(string_max_hp);
     current_hp = std::stoi(string_current_hp);
     attack = std::stoi(string_attack);
