@@ -21,6 +21,7 @@
 #include <string>
 #include <cstdlib>
 #include <cctype>
+#include <fstream>
 using std::cout;
 using std::endl;
 using std::cin;
@@ -266,6 +267,75 @@ void player::upgrade(){
         }
     }
 }
+
+void player::save(){
+    std::ofstream savefile;
+    savefile.open("player.txt");
+    if (savefile.is_open()){
+    savefile << name << endl;
+    savefile << type << endl;
+    savefile << weakness << endl;
+    savefile << max_hp << endl;
+    savefile << current_hp << endl;
+    savefile << attack << endl;
+    savefile << defense << endl;
+    savefile << speed << endl;
+    savefile << xp << endl;
+    return;        
+    }
+    else{
+        cout << "Unable to open file" << endl;
+        return;
+    }
+}
+
+void player::load(){
+    std::ifstream savefile;
+    savefile.open("player.txt");
+    std::string string_playertype;
+    std::string string_weakness;
+    std::string string_max_hp;
+    std::string string_current_hp;
+    std::string string_attack;
+    std::string string_defense;
+    std::string string_speed;
+    std::string string_xp;
+    if (savefile.is_open()){
+    /*std::getline(savefile, this->name, '\n');
+    std::getline(savefile, this->type, '\n');
+    std::getline(savefile, this->weakness, '\n');
+    std::getline(savefile, this->max_hp, '\n');
+    std::getline(savefile, this->current_hp, '\n');
+    std::getline(savefile, this->attack, '\n');
+    std::getline(savefile, this->defense, '\n');
+    std::getline(savefile, this->speed, '\n');
+    std::getline(savefile, this->xp, '\n');
+    return;*/
+    std::getline(savefile, this->name, '\n');
+    std::getline(savefile, string_playertype, '\n');
+    std::getline(savefile, string_weakness, '\n');
+    std::getline(savefile, string_max_hp, '\n');
+    std::getline(savefile, string_current_hp, '\n');
+    std::getline(savefile, string_attack, '\n');
+    std::getline(savefile, string_defense, '\n');
+    std::getline(savefile, string_speed, '\n');
+    std::getline(savefile, string_xp, '\n');
+    type = static_cast<FIGHTER_TYPE>(std::stoi(string_playertype));
+    weakness = static_cast<FIGHTER_TYPE>(std::stoi(string_weakness));
+    max_hp = std::stoi(string_max_hp);
+    current_hp = std::stoi(string_current_hp);
+    attack = std::stoi(string_attack);
+    defense = std::stoi(string_defense);
+    speed = std::stoi(string_speed);
+    xp = std::stoi(string_xp);
+    return;
+    }
+    else{
+        cout << "Unable to open file" << endl;
+        return;
+    }
+}
+
 enemy::enemy(FIGHTER_TYPE initial_type, std::string initial_name, int initial_attack, int initial_defense, int initial_speed, int initial_max_hp){ //enemy constructor
 	  switch (initial_type){
                 case warrior:

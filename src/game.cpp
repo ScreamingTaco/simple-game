@@ -34,19 +34,21 @@ void game::play(){
     char save_or_load;
     while (true){
     cout << "Would you like to start a new game (n), or load a previous game(l)?" << endl;
-    cin >> save_or_load;
+    //cin >> save_or_load;
+    std::cin.get(save_or_load);
     switch (tolower(save_or_load)){
         case 'n':
             new_game();
             return;
             break;
         case 'l':
-            load_game();
+            player main_player;
+            load_game(main_player);
             return;
             break;
-        default:
+        /*default:
             cout << "invalid input" << endl;
-            break;
+            break;*/
         }
     }
 }
@@ -173,6 +175,9 @@ void game::show_credits() const{
             case 'h':
                 show_help();
                 break;
+            case 'q':
+                player1.save();
+                return;
             case 'w':
                 //enemy temp_weak_enemy;
                 temporary_enemy.randomize_weak_enemy();
@@ -226,7 +231,7 @@ void game::new_game(){
     FIGHTER_TYPE player_Type;
     //cout << "Welcome to the Adventures of Linus!" << endl
     cout << "Please enter your character's name (leave blank for default): " << endl;
-    std::getline (cin, player_name, '#'); //adding # somehow fixed a bug that wouldnt allow the user to enter their names
+    std::getline (cin, player_name, '\n'); //adding # somehow fixed a bug that wouldnt allow the user to enter their names
     //cin >> player_name;
     cout << "Please enter your character's type (m for mage, a for archer, or w for warrior( blank will make you warrior): " << endl;
     std::cin.get (player_type_selection);
@@ -242,7 +247,11 @@ void game::new_game(){
     game_loop(main_player, temp_enemy, yogitach);
 }
 
-void game::load_game(){
-
-    
+void game::load_game(player player_to_load){
+    player_to_load.load();
+    player_to_load.show_all_stats();
+    enemy temp_enemy;
+    enemy yogitach(mage, "Yogitach", 200, 200, 200, 200);
+    game_loop(player_to_load, temp_enemy, yogitach);
+    return;
 }

@@ -55,6 +55,8 @@ class player : public lifeform {
         void take_damage(int attack_damage);
         void attack_enemy(enemy &target_enemy);
         void upgrade();
+        void save();
+        void load();
 };
 
 class enemy : public lifeform {

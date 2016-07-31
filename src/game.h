@@ -33,7 +33,7 @@ class game {
         void show_credits() const;
         void game_loop(player player1, enemy temporary_enemy, enemy boss, char path_choice = 'h');
         void new_game();
-        void load_game();
+        void load_game(player player_to_load);
 };
 
 #endif
