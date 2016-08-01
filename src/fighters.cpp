@@ -1,26 +1,27 @@
 /*  Adventures of Linus- text based adventure game
     Copyright (C) 2016  Carlos Vazquez
-
+    
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-
+    
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-    Contact me at fwcarlitos@icloud.com*/
+    
+    Contact me at fwcarlitos@icloud.com
+*/
 
 #include "fighters.h"
 #include <iostream>
 #include <string>
 #include <cstdlib>
 #include <cctype>
+#include <fstream>
 using std::cout;
 using std::endl;
 using std::cin;
@@ -173,9 +174,10 @@ void player::upgrade(){
                     xp = xp - upgrade_amount;
                     break;
                 }
-                else
+                else{
                     cout << "I dont understand what you mean" << endl;
                     break;
+                }
             case 'd':
                 cout << "How many xp points would you like to use to upgrade defense? " << endl;
                 cin >> upgrade_amount;
@@ -188,9 +190,10 @@ void player::upgrade(){
                     xp = xp - upgrade_amount;
                     break;
                 }
-                else
+                else{
                     cout << "I dont understand what you mean" << endl;
                     break;
+                }
             case 's':
                 cout << "How many xp points would you like to use to upgrade speed? " << endl;
                 cin >> upgrade_amount;
@@ -203,9 +206,10 @@ void player::upgrade(){
                     xp = xp - upgrade_amount;
                     break;
                 }
-                else
+                else{
                     cout << "I dont understand what you mean" << endl;
                     break;
+                }
             case 'm':
                 cout << "How many xp points would you like to use to upgrade your max health? " << endl;
                 cin >> upgrade_amount;
@@ -218,9 +222,10 @@ void player::upgrade(){
                     xp = xp - upgrade_amount;
                     break;
                 }
-                else
+                else{
                     cout << "I dont understand what you mean" << endl;
                     break;
+                }
             case 'h':
                 if (current_hp == max_hp){
                     cout << "You do not need to be healed!" << endl;
@@ -238,9 +243,10 @@ void player::upgrade(){
                     cout << "Ok. Goodbye!" << endl;
                     break;
                 }
-                else
+                else{
                     cout << "I dont understand what you mean" << endl;
                     break;
+                }
             case 'q':
                 cout << "Have a nice day!" << endl;
                 return;
@@ -261,6 +267,69 @@ void player::upgrade(){
         }
     }
 }
+
+void player::save(){
+    std::ofstream savefile;
+    savefile.open("player.txt");
+    if (savefile.is_open()){
+    savefile << name << endl;
+    savefile << type << endl;
+    savefile << weakness << endl;
+    savefile << max_hp << endl;
+    savefile << current_hp << endl;
+    savefile << attack << endl;
+    savefile << defense << endl;
+    savefile << speed << endl;
+    savefile << xp << endl;
+    return;        
+    }
+    else{
+        cout << "Unable to open file" << endl;
+        return;
+    }
+}
+
+void player::load(){
+    std::ifstream savefile;
+    savefile.open("player.txt");
+    std::string string_playertype;
+    std::string string_weakness;
+    std::string string_max_hp;
+    std::string string_current_hp;
+    std::string string_attack;
+    std::string string_defense;
+    std::string string_speed;
+    std::string string_xp;
+    if (savefile.is_open()){
+    //cout << "Opening file" << endl; //debug
+    std::getline(savefile, this->name, '\n');
+    std::getline(savefile, string_playertype, '\n');
+    std::getline(savefile, string_weakness, '\n');
+    std::getline(savefile, string_max_hp, '\n');
+    std::getline(savefile, string_current_hp, '\n');
+    std::getline(savefile, string_attack, '\n');
+    std::getline(savefile, string_defense, '\n');
+    std::getline(savefile, string_speed, '\n');
+    std::getline(savefile, string_xp, '\n');
+   // cout << "Reading type" << endl;//debug
+    type = static_cast<FIGHTER_TYPE>(std::stoi(string_playertype));
+    //cout << "Reading weakness" << endl;//debug
+    weakness = static_cast<FIGHTER_TYPE>(std::stoi(string_weakness));
+    //cout << "Reading max_hp)" << endl;//debug
+    max_hp = std::stoi(string_max_hp);
+    current_hp = std::stoi(string_current_hp);
+    attack = std::stoi(string_attack);
+    defense = std::stoi(string_defense);
+    speed = std::stoi(string_speed);
+    xp = std::stoi(string_xp);
+    return;
+    }
+    else{
+        cout << "Unable to open file" << endl;
+        return;
+    }
+}
+
 enemy::enemy(FIGHTER_TYPE initial_type, std::string initial_name, int initial_attack, int initial_defense, int initial_speed, int initial_max_hp){ //enemy constructor
 	  switch (initial_type){
                 case warrior:
@@ -285,10 +354,10 @@ enemy::enemy(FIGHTER_TYPE initial_type, std::string initial_name, int initial_at
 
 
 void enemy::randomize_strong_enemy(){ //randomizes an enemy
-    this->attack = rand() % 150 + 1;
-    this->defense = rand() % 150 + 1;
-    this->speed = rand() % 150 + 1;
-    this->max_hp = rand() % 150 + 1;
+    this->attack = rand() % 150 + 100;
+    this->defense = rand() % 150 + 100;
+    this->speed = rand() % 150 + 100;
+    this->max_hp = rand() % 150 + 100;
     this->current_hp = max_hp;
     this->xp = rand() % 50 + 40;
     int new_type = rand() % 4;
@@ -313,10 +382,10 @@ void enemy::randomize_strong_enemy(){ //randomizes an enemy
 }
 
 void enemy::randomize_medium_enemy(){
-    this->attack = rand() % 75 + 1;
-    this->defense = rand() % 75 + 1;
-    this->speed = rand() % 75 + 1;
-    this->max_hp = rand() % 75 + 1;
+    this->attack = rand() % 75 + 40;
+    this->defense = rand() % 75 + 40;
+    this->speed = rand() % 75 + 40;
+    this->max_hp = rand() % 75 + 40;
     this->current_hp = max_hp;
     this->xp = rand() % 20 + 15;
     int new_type = rand() % 4;

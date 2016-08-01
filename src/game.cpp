@@ -1,21 +1,20 @@
 /*  Adventures of Linus- text based adventure game
     Copyright (C) 2016  Carlos Vazquez
-
+    
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-
+    
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-    Contact me at fwcarlitos@icloud.com*/
-
+    
+    Contact me at fwcarlitos@icloud.com
+*/
 
 #include "game.h"
 #include "fighters.h"
@@ -23,6 +22,7 @@
 #include <string>
 #include <chrono>
 #include <thread>
+#include <fstream>
 
 using std::cout;
 using std::endl;
@@ -30,77 +30,35 @@ using std::string;
 using std::cin;
 
 void game::play(){
-    show_story();
-    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-    string player_name;
-    char player_type_selection;
-    char path_choice; // battle random enemy, fight boss, upgrade, etc
-    FIGHTER_TYPE player_Type;
-    //cout << "Welcome to the Adventures of Linus!" << endl
-    cout << "Please enter your character's name (leave blank for default): " << endl;
-    std::getline (cin, player_name);
-    cout << "Please enter your character's type (m for mage, a for archer, or w for warrior( blank will make you warrior): " << endl;
-    std::cin.get (player_type_selection);
-    player main_player (calc_Type(player_type_selection), player_name.empty() ? "Linus" : player_name);
-    cout << "Your starting stats are:" << endl << endl;
-    main_player.show_all_stats();
-    cout << endl << endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-    show_help(); 
-    cout << endl;
-    enemy temp_enemy;
-    enemy yogitach(mage, "Yogitach", 200, 200, 200, 200);
+    show_banner();
+    char save_or_load;
     while (true){
-        if (main_player.is_alive() == false){
-            cout << "Game over!" << endl << endl;
+    cout << "Would you like to start a new game (n), or load a previous game(l)?" << endl;
+    //cin >> save_or_load;
+    std::cin.get(save_or_load);
+    switch (tolower(save_or_load)){
+        case 'n':
+            new_game();
             return;
+            break;
+        case 'l':
+            player main_player;
+            load_game(main_player);
+            return;
+            break;
+        /*default:
+            cout << "invalid input" << endl;
+            break;*/
         }
-        cout << "(home) ";
-        cin >> path_choice;
-        cout << endl;
-        switch (tolower(path_choice)){
-            case 'h':
-                show_help();
-                break;
-            case 'w':
-                //enemy temp_weak_enemy;
-                temp_enemy.randomize_weak_enemy();
-                battle (main_player, temp_enemy);
-                break;
-            case 'm':
-                //enemy temp_enemy;
-                temp_enemy.randomize_medium_enemy();
-                battle(main_player, temp_enemy);
-                break;
-            case 's':
-                //enemy temp_strong_enemy;
-                temp_enemy.randomize_strong_enemy();
-                battle(main_player, temp_enemy);
-                break;
-            case 'u':
-                main_player.upgrade();
-                break;
-            case 'l':
-                main_player.show_all_stats();
-                break;
-            case 'y':
-                //enemy yogitach(mage, "Yogitach", 200, 200, 200, 200);
-                battle(main_player, yogitach);
-                if (main_player.is_alive()){
-                    show_credits();
-                    return;
-                }
-                else {
-                    cout << "Game over!" << endl;
-                    return;
-                }
-                return;
-                break;
-            default:
-                cout << "Invalid input" << endl;
-                break;
     }
 }
+
+void game::show_banner() const {
+    cout << "#########################################" << endl << endl << endl << endl; 
+    cout << "         The Adventures of Linus         " << endl << endl << endl;
+    cout << "   Copyright (C) 2016  Carlos Vazquez   " << endl;
+    cout << "#########################################" << endl;
+    
 }
 
 void game::show_story() const {
@@ -182,9 +140,10 @@ void game::battle(player &battle_player, enemy &battle_enemy){
 void game::show_help() const{
     cout << "Press h to display this help later." << endl;
     //cout << "By typing b, you will enter a battle with a random opponent." << endl;
+    cout << "Press q to save and quit." << endl;
     cout << "By typing w, you will face an opponent with weak stats" << endl;
-    cout << "By typing m, you will face an opponent with the potential to have higher level stats." << endl;
-    cout << "By typing s, you will face an opponent with the potential to be very strong." << endl;
+    cout << "By typing m, you will face an opponent with medium stats." << endl;
+    cout << "By typing s, you will face an opponent with strong stats." << endl;
     cout << "Type u when you want to upgrade" << endl;
     cout << "Type l to see current stats" << endl;
     cout << "When you feel ready to face Yogitach, press y" << endl; 
@@ -201,4 +160,100 @@ void game::show_credits() const{
         std::this_thread::sleep_for(std::chrono::milliseconds(3000));
         cout << "Thanks for playing!" << endl;
     
+}
+
+ void game::game_loop(player player1, enemy temporary_enemy, enemy boss, char path_choice){
+        while (true){
+        if (player1.is_alive() == false){
+            cout << "Game over!" << endl << endl;
+            return;
+        }
+        cout << "(home) ";
+        cin >> path_choice;
+        cout << endl;
+        switch (tolower(path_choice)){
+            case 'h':
+                show_help();
+                break;
+            case 'q':
+                player1.save();
+                return;
+            case 'w':
+                //enemy temp_weak_enemy;
+                temporary_enemy.randomize_weak_enemy();
+                battle (player1, temporary_enemy);
+                break;
+            case 'm':
+                //enemy temp_enemy;
+                temporary_enemy.randomize_medium_enemy();
+                battle(player1, temporary_enemy);
+                break;
+            case 's':
+                //enemy temp_strong_enemy;
+                temporary_enemy.randomize_strong_enemy();
+                battle(player1, temporary_enemy);
+                break;
+            case 'u':
+                player1.upgrade();
+                break;
+            case 'l':
+                player1.show_all_stats();
+                break;
+            case 'y':
+                battle(player1, boss);
+                if (player1.is_alive() && boss.is_alive() == false){
+                    show_credits();
+                    return;
+                }
+                else if (player1.is_alive() && boss.is_alive()){
+                    break;
+                }
+                else {
+                    cout << "Game over!" << endl;
+                    return;
+                }
+                return;
+                break;
+            default:
+                cout << "Invalid input" << endl;
+                break;
+    }
+}
+     
+}
+
+void game::new_game(){
+    //for some reason, a first input is asumed, so im adding this to bypass it
+    string nothing = " ";
+    std::getline(cin, nothing);
+    show_story();
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    string player_name = " ";
+    char player_type_selection;
+    FIGHTER_TYPE player_Type;
+    cout << "Please enter your character's name (leave blank for default): " << endl;
+    std::getline (cin, player_name); 
+    //cin >> player_name;
+    cout << "Please enter your character's type (m for mage, a for archer, or w for warrior( blank will make you warrior): " << endl;
+    std::cin.get (player_type_selection);
+    player main_player (calc_Type(player_type_selection), player_name.empty() ? "Linus" : player_name);
+    //player main_player (calc_Type(player_type_selection));
+    cout << "Your starting stats are:" << endl << endl;
+    main_player.show_all_stats();
+    cout << endl << endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+    show_help(); 
+    cout << endl;
+    enemy temp_enemy;
+    enemy yogitach(mage, "Yogitach", 200, 200, 200, 200);
+    game_loop(main_player, temp_enemy, yogitach);
+}
+
+void game::load_game(player player_to_load){
+    player_to_load.load();
+    player_to_load.show_all_stats();
+    enemy temp_enemy;
+    enemy yogitach(mage, "Yogitach", 200, 200, 200, 200);
+    game_loop(player_to_load, temp_enemy, yogitach);
+    return;
 }
