@@ -17,10 +17,15 @@ CC = g++
 COMPILER_FLAGS = -Wall
 
 #LINKER_FLAGS specifies the libraries we're linking against
+#for sdl programs
 #LINKER_FLAGS = -lSDL2
 
+#for windows
+#LINKER_FLAGS = -static
+#LINKER_FLAGS = -static-libgcc -static-libstdc++ -lpthread -L libwinpthread-1.dll
+
 #OBJ_NAME specifies the name of our exectuable
-OBJ_NAME = adventures_of_linus_version_1.1_beta
+OBJ_NAME = adventures_of_linus_version_1.1_beta-32bit.exe
 
 #This is the target that compiles our executable
 all : $(OBJS)
