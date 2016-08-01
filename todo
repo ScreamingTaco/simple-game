@@ -1,4 +1,4 @@
-Add a Lua scripting interface
+Add a Lua scripting interface and a way to prevent players from being able to modify their stats (player.txt can be modified very easily).
 fix bugs
 Minor tweaks to improve gameplay experience for next version
 Set mingw to compile for release instead of debug
