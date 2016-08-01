@@ -1,5 +1,5 @@
-add saving
+Add a Lua scripting interface
 fix bugs
 Minor tweaks to improve gameplay experience for next version
 Set mingw to compile for release instead of debug
-Add copyright notice to start of game
+
