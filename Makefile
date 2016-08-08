@@ -1,6 +1,6 @@
 
 #OBJS specifies which files to compile as part of the project
-OBJS = fighters.cpp game.cpp main.cpp
+OBJS = src/fighters.cpp src/game.cpp src/main.cpp
 
 #CC specifies which compiler we're using
 #for linux
@@ -30,3 +30,8 @@ OBJ_NAME = adventures_of_linus_version_1.1_beta
 #This is the target that compiles our executable
 all : $(OBJS)
 	$(CC) $(OBJS) $(COMPILER_FLAGS) -o $(OBJ_NAME)
+
+	
+install:
+	cp $(OBJ_NAME) /usr/bin/adventures_of_linus
+	rm $(OBJ_NAME)
