@@ -9,7 +9,7 @@ cd simple-game
 
 make
 
-make install
+make install (you may need to do make install with sudo)
 
 then just type 
 
