@@ -25,7 +25,7 @@ COMPILER_FLAGS = -Wall
 #LINKER_FLAGS = -static-libgcc -static-libstdc++ -lpthread -L libwinpthread-1.dll
 
 #OBJ_NAME specifies the name of our exectuable
-OBJ_NAME = adventures_of_linus_version_1.1_beta
+OBJ_NAME = adventures_of_linus_version_1.1.1_beta
 
 #This is the target that compiles our executable
 all : $(OBJS)
