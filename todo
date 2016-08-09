@@ -1,5 +1,4 @@
-add saving
-fix bugs
-Minor tweaks to improve gameplay experience for next version
-Set mingw to compile for release instead of debug
-Add copyright notice to start of game
+Make the game more data driven and less hardcoded (to make it moddable). 
+Fix bugs.
+Minor tweaks to improve gameplay experience for next version.
+
