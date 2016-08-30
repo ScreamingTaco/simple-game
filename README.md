@@ -1,4 +1,7 @@
 # simple-game
+
+NOTE: I will not have a lot of time to work on this until next summer, so don't expect major updates soon
+
 a small text-based game i made for learning purposes
 
 to install do 
