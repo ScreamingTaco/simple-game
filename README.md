@@ -1,6 +1,6 @@
 # simple-game
 
-NOTE: this is from when I was first learning to program. It is not an example of good code. Do not try to learn from this. I keep this project for nostalgia, mostly.
+NOTE: this is from when I was first learning to program. It is not an example of good code. Do not try to learn from this. I keep this project for nostalgia, mostly. Maybe some day I'll remake this well (probably not though).
 
 a small text-based game i made for learning purposes
 
